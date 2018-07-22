@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jul 22 12:57:19 2018
+
+@author: admin
+"""
+import collections
+
+# brutal force solution
+def threeSum(nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        ans = []
+        for i in range(len(nums)-2):
+            for j in range(i+1, len(nums)-1):
+                for k in range(j+1, len(nums)):
+                    if nums[i] + nums[j] + nums[k] == 0:
+                        ans.append((nums[i],nums[j],nums[k]))
+        return ans
+
+
+# hashtable solution 
+def threeSum(nums):
+    num_dic = collections.defaultdict(list)
+    ans = []
+    
+    for i in range(len(nums)):
+        num_dic[nums[i]].append(i)
+        
+    return num_dic
+    
+
+    for i in range(len(nums)-1):
+        for j in range(i+1, len(nums)-1):
+            temp_target = 0 - nums[i] - nums[j]
+     
+            for k in num_dic[temp_target]:
+                if len(set((i,j,k))) == 3: #remove duplicate
+                    ans.append( (nums[i],nums[j],nums[k]))
+    return ans
+
+#two pointer
+def threeSum(nums):
+    
+    ans = []
+    
+    for i in range(len(nums)-1):
+        for j in range(i+1, len(nums)-1):
+            temp_target = 0 - nums[i] - nums[j]
+            if temp_target in nums:
+                ans.append((nums[i],nums[j],temp_target))
+    return ans
+
+#two pointer with sorted list
+    
+def threeSum(nums):
+    res = []
+    nums.sort()
+    for i in range(len(nums)-2):
+        l, r = i+1, len(nums)-1
+        while l < r:
+            s = nums[i] + nums[l] + nums[r]
+            print(s)
+            if s < 0:
+                l +=1 
+            elif s > 0:
+                r -= 1
+            else:
+                res.append((nums[i], nums[l], nums[r]))
+                #to stop the recrusion
+                while l < r and nums[l] == nums[l+1]:
+                    l += 1
+                while l < r and nums[r] == nums[r-1]:
+                    r -= 1
+                l += 1; r -= 1
+    return res
+
+
+if __name__ == "__main__":
+    nums = [-1,0,1,2,-1,-4]
+    ans = threeSum(nums)
+    print(ans)
